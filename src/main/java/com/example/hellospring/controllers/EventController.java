@@ -1,10 +1,11 @@
 package com.example.hellospring.controllers;
 
 
-import com.example.hellospring.data.EventData;
+import com.example.hellospring.data.EventRepository;
 import com.example.hellospring.models.Event;
 import com.example.hellospring.models.EventType;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("events")
 public class EventController {
 
-
+    @Autowired
+    private EventRepository eventRepository;
 
     @GetMapping
     public String displayAllEvents(Model model){
         model.addAttribute("title","All Events");
-        model.addAttribute("events", EventData.getAll());
+        model.addAttribute("events", eventRepository.findAll());
         return "events/index";
     }
 
@@ -38,14 +40,14 @@ public class EventController {
             model.addAttribute("title","Create Event");
             return "events/create";
         }
-        EventData.add(newEvent);
+        eventRepository.save(newEvent);
         return "redirect:/events";
     }
 
     @GetMapping("delete")
     public String displayDeleteEventForm(Model model){
         model.addAttribute("title","Delete Events");
-        model.addAttribute("events",EventData.getAll());
+        model.addAttribute("events",eventRepository.findAll());
         return "events/delete";
     }
 
@@ -53,8 +55,8 @@ public class EventController {
     public String processDeleteEventsForm(@RequestParam(required = false) int[] eventIds){
         if(eventIds != null) {
             for (int id : eventIds) {
-                EventData.remove(id);
-            }
+                eventRepository.deleteById(id);
+             }
         }
         return "redirect:/events";
     }
