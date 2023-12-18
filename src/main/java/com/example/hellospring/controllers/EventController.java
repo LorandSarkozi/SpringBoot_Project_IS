@@ -4,15 +4,11 @@ package com.example.hellospring.controllers;
 import com.example.hellospring.data.EventData;
 import com.example.hellospring.models.Event;
 import com.example.hellospring.models.EventType;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("events")
@@ -37,8 +33,7 @@ public class EventController {
 
 
     @PostMapping("create")
-    public String processCreateEventForm(@ModelAttribute @Valid Event newEvent,
-                                         Errors errors, Model model){
+    public String processCreateEventForm(@ModelAttribute @Valid Event newEvent, Errors errors, Model model){
         if(errors.hasErrors()){
             model.addAttribute("title","Create Event");
             return "events/create";
