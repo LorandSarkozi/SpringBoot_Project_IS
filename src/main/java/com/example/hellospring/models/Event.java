@@ -1,9 +1,8 @@
 package com.example.hellospring.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import jdk.jfr.Enabled;
 
@@ -11,41 +10,28 @@ import jdk.jfr.Enabled;
 import java.util.Objects;
 
 @Entity
-public class Event {
+public class Event extends AbstractEntity{
 
-    @Id
-    @GeneratedValue
-    private int id;
 
     @NotBlank(message = "Name is required!")
     @Size(min = 3, max = 50, message = "Name must be between 2 and 50 characters.")
     private String  name;
 
-    @Size(max = 500, message = "Description too long.")
-    private String description;
+    @OneToOne(cascade = CascadeType.ALL)
+    @Valid
+    @NotNull
+    private EventDetails eventDetails;
 
-    @NotBlank(message = "Email is required!")
-    @Email(message = "Invalid e-mail, Try again.")
-    private String contactEmail;
+    @ManyToOne
+    @NotNull(message="Category is required")
+    private EventCategory eventCategory;
 
-    private EventType type;
-
-    public Event(String name, String description, String contactEmail, EventType type) {
+    public Event(String name, String description, String contactEmail, EventCategory eventCategory) {
         this.name = name;
-        this.description = description;
-        this.contactEmail = contactEmail;
-        this.type = type;
+        this.eventCategory = eventCategory;
     }
 
     public Event(){
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getName() {
@@ -56,43 +42,27 @@ public class Event {
         this.name = name;
     }
 
-    public String getContactEmail() {
-        return contactEmail;
+
+    public EventCategory getEventCategory() {
+        return eventCategory;
     }
 
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void setEventCategory(EventCategory eventCategory) {
+        this.eventCategory = eventCategory;
     }
 
-    public EventType getType() {
-        return type;
+    public EventDetails getEventDetails() {
+        return eventDetails;
     }
 
-    public void setType(EventType type) {
-        this.type = type;
+    public void setEventDetails(EventDetails eventDetails) {
+        this.eventDetails = eventDetails;
     }
-
-    public int getId() {
-        return id;
-    }
-
-
 
     @Override
     public String toString() {
         return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
