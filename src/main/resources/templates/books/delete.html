@@ -12,7 +12,7 @@
         <div class="form-group">
             <label>
                 <span th:text="${book.title}"></span>
-                <input type="checkbox" name="bookIds" th:value="3" class="form-control">
+                <input type="checkbox" name="bookIds" th:value="${book.id}" class="form-control">
             </label>
         </div>
     </th:block>

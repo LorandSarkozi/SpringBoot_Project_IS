@@ -1,40 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-<body class="container">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-<header th:replace="fragments :: header"></header>
+<head th:replace="~{fragments :: head}"></head>
 
-<form method="post" >
-    <div class="form-group">
-        <label>Username
-            <input th:field="${user.username}" class="form-control">
-        </label>
-        <p class="error" th:errors="${user.username}"></p>
+<body>
+<div class="body">
+    <h1>Register page</h1>
+
+    <div th:switch="${registrationSuccess}">
+        <div th:case="'Success'" class="alert alert-success">
+            <strong>Success!</strong> Operation performed successfully.
+        </div>
+        <div th:case="'Failed'" class="alert alert-danger">
+            <strong>Failure!</strong> Operation failed. Please try again
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Password
-            <input type="password" th:field="${user.password}" class="form-control">
-        </label>
-        <p class="error" th:errors="${user.password}"></p>
-    </div>
+    <form th:action="@{/createUser}" method="post" th:object="${user}" class="px-4">
+        <div class="mb-3 row">
+            <label for="firstName" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-6">
+                <input type="text"  id="username" autofocus="autofocus"
+                       class="form-control" required name="username" th:field="*{username}" >
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label>Role
-            <select th:field="${user.role}">
-                <option th:each="role : ${roles}"
-                        th:value="${role}"
-                        th:text="${role.displayName}"
-                ></option>
-            </select>
-        </label>
-    </div>
+        <div class="mb-3 row">
+            <label for="firstName" class="col-sm-2 col-form-label">first Name</label>
+            <div class="col-sm-6">
+                <input type="text"  id="firstName" autofocus="autofocus"
+                       class="form-control" required name="firstName" th:field="*{firstName}" >
+            </div>
+        </div>
 
-    <div class="form-group">
-        <input type="submit" value="Create Book" class="btn btn-success">
-    </div>
-</form>
+        <div class="mb-3 row">
+            <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+            <div class="col-sm-6">
+                <input type="text"  id="lastName" autofocus="autofocus"
+                       class="form-control" required name="lastName" th:field="*{lastName}" >
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="emailAddress" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-6">
+                <input type="text"  id="emailAddress" autofocus="autofocus"
+                       class="form-control" required name="emailAddress" th:field="*{emailAddress}" >
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="password" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-6">
+                <input type="password"  id="password" autofocus="autofocus"
+                       class="form-control" required name="password" th:field="*{password}" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Role
+                <select th:field="${user.role}">
+                    <option th:each="role : ${roles}"
+                            th:value="${role}"
+                            th:text="${role.displayName}"
+                    ></option>
+                </select>
+            </label>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </form>
+
+
+</div>
 
 </body>
 </html>

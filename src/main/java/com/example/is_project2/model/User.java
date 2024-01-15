@@ -35,6 +35,7 @@ public class User {
             inverseJoinColumns = {
                     @JoinColumn(name = "ROLES_ID",
                             referencedColumnName = "ID")})
+
     private List<Role> roles;
 
     @Builder.Default

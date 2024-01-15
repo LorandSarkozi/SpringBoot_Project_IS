@@ -14,6 +14,7 @@ public class BookMapper {
 
     public BookDto bookEntityToDto(Book book){
         return BookDto.builder()
+                .id(book.getId())
                 .author(book.getAuthor())
                 .title(book.getTitle())
                 .quantity(book.getQuantity())
@@ -28,9 +29,9 @@ public class BookMapper {
     }
 
 
-    public Book bookDtoToEntity(BookDto bookDto, Integer id){
+    public Book bookDtoToEntity(BookDto bookDto){
         return Book.builder()
-                .id(id)
+                .id(bookDto.id())
                 .author(bookDto.author())
                 .title(bookDto.title())
                 .quantity(bookDto.quantity())
@@ -38,9 +39,9 @@ public class BookMapper {
                 .build();
     }
 
-    public List<Book> bookListDtoToEntity(List<BookDto> bookDtos, Integer id){
+    public List<Book> bookListDtoToEntity(List<BookDto> bookDtos){
         return bookDtos.stream()
-                .map(bookDto -> bookDtoToEntity(bookDto, id))
+                .map(bookDto -> bookDtoToEntity(bookDto))
                 .toList();
     }
 }
