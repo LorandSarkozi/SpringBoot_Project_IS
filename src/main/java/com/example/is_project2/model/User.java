@@ -1,54 +1,61 @@
 package com.example.is_project2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.NaturalId;
 
+import java.time.LocalDate;
 import java.util.*;
 
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-public class User extends AbstractEntity{
+@Table(name = "USERS")
+public class User {
 
-    @NotBlank
-    @Email(message = "Requires a valid email.")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NonNull
+    @Column(unique = true)
     private String username;
 
-    @NotBlank
+    @NonNull
     private String password;
 
-    private Role role;
+    @Singular
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "users_roles",
+            joinColumns = {
+                    @JoinColumn(name = "USERS_ID",
+                            referencedColumnName = "ID")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ROLES_ID",
+                            referencedColumnName = "ID")})
+    private List<Role> roles;
 
-    public User(String username, String password, Role role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
+    @Builder.Default
+    private Boolean accountNonExpired = true;
 
-    public User() {}
+    @Builder.Default
+    private Boolean accountNonLocked = true;
 
-    public String getUsername() {
-        return username;
-    }
+    @Builder.Default
+    private Boolean credentialsNonExpired = true;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @Builder.Default
+    private Boolean enabled = true;
 
-    public String getPassword() {
-        return password;
-    }
+    private String firstName;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String lastName;
 
-    public Role getRole() {
-        return role;
-    }
+    @NaturalId(mutable = true)
+    private String emailAddress;
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    private LocalDate birthdate;
+
 }

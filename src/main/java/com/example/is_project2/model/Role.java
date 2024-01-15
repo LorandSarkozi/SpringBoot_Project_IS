@@ -1,22 +1,24 @@
 package com.example.is_project2.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.*;
 
-public enum Role {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "ROLES")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    CUSTOMER("Customer"),
-    EMPLOYEE("Employee"),
-    ADMINISTRATOR("Administrator");
+    @NonNull
+    @Column(unique = true)
+    private String role;
 
-    private final String displayName;
 
-    Role(String displayName){
-        this.displayName = displayName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
 }
