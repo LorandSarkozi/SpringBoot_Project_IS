@@ -21,12 +21,16 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http
+        http.csrf().disable()
                 .authorizeHttpRequests(authConfig -> {
                     authConfig.requestMatchers(HttpMethod.GET, "/", "/login", "/register", "/error", "/login-error", "/logout", "/css/**").permitAll();
                     authConfig.requestMatchers(HttpMethod.POST, "/createUser").permitAll();
                     authConfig.requestMatchers(HttpMethod.GET, "/user").hasAuthority("ADMIN");
                     authConfig.requestMatchers(HttpMethod.GET, "/admin").hasAuthority("ADMIN");
+                    authConfig.requestMatchers(HttpMethod.GET, "/books/create").permitAll();
+                    authConfig.requestMatchers(HttpMethod.POST, "/books/create").permitAll();
+                    authConfig.requestMatchers(HttpMethod.GET, "/books/delete").permitAll();
+                    authConfig.requestMatchers(HttpMethod.POST, "/books/delete").permitAll();
                     authConfig.requestMatchers(HttpMethod.GET, "/developer").hasAuthority("DEVELOPER");
                     authConfig.requestMatchers(HttpMethod.GET, "/users").hasAnyAuthority("ADMIN", "DEVELOPER");
                     authConfig.requestMatchers(HttpMethod.GET, "/roles").hasAnyAuthority("ADMIN", "DEVELOPER");

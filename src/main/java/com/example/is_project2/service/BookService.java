@@ -14,8 +14,11 @@ public interface BookService {
     List<BookDto> getAllBooks();
 
     BookDto createBook(Book book);
+    void save(Book book);
 
     BookDto updateBook(Book book);
 
     void deleteBook(Book book);
+
+    void deleteBookById(Integer id);
 }

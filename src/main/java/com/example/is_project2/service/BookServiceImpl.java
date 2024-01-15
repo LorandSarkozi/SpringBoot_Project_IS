@@ -32,8 +32,11 @@ public class BookServiceImpl implements BookService{
     }
 
     public BookDto createBook(Book book){
-        book.setId(book.getId());
+        //book.setId(book.getId());
         return bookMapper.bookEntityToDto(bookRepository.save(book));
+    }
+    public void save(Book book){
+        bookRepository.save(book);
     }
 
     public BookDto updateBook(Book book){
@@ -42,5 +45,9 @@ public class BookServiceImpl implements BookService{
 
     public void deleteBook(Book book){
         bookRepository.delete(book);
+    }
+
+    public void deleteBookById(Integer id){
+        bookRepository.deleteById(id);
     }
 }
