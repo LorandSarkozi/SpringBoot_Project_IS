@@ -36,4 +36,4 @@ The application provides a robust platform for organizing and managing events, s
 - **Gradle Build Tool:** Manages project dependencies and build processes, providing a streamlined development workflow.
 - **Dependency Management:** Ensures that all required libraries and frameworks are included and up-to-date.
 
-## Project Setup and Installation
+
