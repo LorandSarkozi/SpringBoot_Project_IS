@@ -4,7 +4,7 @@ The Event Management System is a comprehensive web application built with the Ja
 
 ## Project Overview
 
-The application provides a robust platform for organizing and managing events, such as conferences, workshops, and social gatherings. It features a user-friendly interface built with Thymeleaf, with data managed through a MySQL database. The system supports functionalities for event creation, viewing, updating, and deleting, along with user registration and event registration.
+The application provides a robust platform for organizing and managing events, such as conferences, workshops, and social gatherings. It features a user-friendly interface built with Thymeleaf, with data managed through a MySQL database. The system supports functionalities for event creation, viewing, updating, and deleting, and nonetheless category creation.
 
 ## Technologies Used
 
